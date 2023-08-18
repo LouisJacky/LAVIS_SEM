@@ -5,6 +5,8 @@
  For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
 """
 
+import os
+
 import argparse
 import random
 
@@ -29,11 +31,10 @@ from lavis.processors import *
 from lavis.runners.runner_base import RunnerBase
 from lavis.tasks import *
 
-
 def parse_args():
     parser = argparse.ArgumentParser(description="Training")
 
-    parser.add_argument("--cfg-path", required=True, help="path to configuration file.")
+    parser.add_argument("--cfg-path", required=False, help="path to configuration file.")
     parser.add_argument(
         "--options",
         nargs="+",
@@ -43,6 +44,8 @@ def parse_args():
     )
 
     args = parser.parse_args()
+
+    args.cfg_path = "lavis/projects/blip2/eval/sem_eval.yaml"
     # if 'LOCAL_RANK' not in os.environ:
     #     os.environ['LOCAL_RANK'] = str(args.local_rank)
 

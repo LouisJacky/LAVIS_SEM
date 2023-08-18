@@ -1,0 +1,61 @@
+ # Copyright (c) 2022, salesforce.com, inc.
+ # All rights reserved.
+ # SPDX-License-Identifier: BSD-3-Clause
+ # For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+
+# Overall Accuracy is: 63.13
+# Per Answer Type Accuracy is the following:
+# other : 52.90
+# yes/no : 84.28
+# number : 41.01
+
+model:
+  arch: blip2_t5_sem
+  model_type: pretrain_flant5xl
+  use_grad_checkpoint: False
+  load_pretrained: True
+
+  pretrained: "/data/A/lvjq/.cache/torch/hub/my_checkpoints/merged_contrast_2.pth"
+
+  evaluate: True
+
+datasets:
+  vqa_x_sem: # name of the dataset builder
+    type: eval
+    vis_processor:
+        eval:
+          name: "blip_image_eval"
+          image_size: 224
+    text_processor:
+        eval:
+          name: "blip_question"
+
+
+run:
+  task: vqa_bbox
+  # optimization-specific
+  batch_size_train: 16
+  batch_size_eval: 16
+  num_workers: 4
+
+  # inference-specific
+  max_len: 80
+  min_len: 1
+  num_beams: 5
+  inference_method: "generate"
+  prompt: "{}"
+
+  seed: 42
+  output_dir: "output/BLIP2/VQA_bbox_eval"
+
+  evaluate: True
+  test_splits: ["test"]
+
+  # distribution-specific
+  device: "cuda"
+  world_size: 1
+  dist_url: "env://"
+  distributed: True
+
+
+

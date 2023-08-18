@@ -5,8 +5,10 @@
  For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
 """
 
-import argparse
 import os
+
+import argparse
+
 import random
 
 import numpy as np
@@ -30,12 +32,13 @@ from lavis.models import *
 from lavis.processors import *
 from lavis.runners import *
 from lavis.tasks import *
-
+import os
+import time
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Training")
 
-    parser.add_argument("--cfg-path", required=True, help="path to configuration file.")
+    parser.add_argument("--cfg-path", required=False, help="path to configuration file.")
     parser.add_argument(
         "--options",
         nargs="+",
@@ -45,6 +48,8 @@ def parse_args():
     )
 
     args = parser.parse_args()
+
+    args.cfg_path = "lavis/projects/blip2/train/sem_train.yaml"
     # if 'LOCAL_RANK' not in os.environ:
     #     os.environ['LOCAL_RANK'] = str(args.local_rank)
 
@@ -96,8 +101,15 @@ def main():
     runner = get_runner_class(cfg)(
         cfg=cfg, job_id=job_id, task=task, model=model, datasets=datasets
     )
+
+    print("cache emptied")
+
     runner.train()
 
 
 if __name__ == "__main__":
     main()
+
+
+
+

@@ -1,0 +1,17 @@
+    datasets:
+      vqa_x_sem: # name of the dataset builder
+        #dataset_card: dataset_card/avsd_dialogue.md # path to the dataset card
+        data_type: images # [images|videos|features] we use features in this case for extracted video features
+
+        build_info:
+          # Be careful not to append minus sign (-) before split to avoid itemizing
+          annotations:
+            train:
+              url: /path_to_your/SEM/Datasets/annotation/VQA-X_train.json
+              storage: /path_to_your/SEM/Datasets/annotation/VQA-X_train.json
+            val:
+              url: /path_to_your/SEM/Datasets/annotation/VQA-X_val.json
+              storage: /path_to_your/SEM/Datasets/annotation/VQA-X_val.json
+
+          images:
+            storage: /path_to_your/SEM/Datasets/images/

@@ -39,6 +39,11 @@ from lavis.datasets.builders.retrieval_builder import (
 from lavis.datasets.builders.dialogue_builder import AVSDDialBuilder
 from lavis.datasets.builders.text_to_image_generation_builder import BlipDiffusionFinetuneBuilder
 
+from lavis.datasets.builders.vqa_x_sem_builder import VQA_X_SEM_Builder
+from lavis.datasets.builders.aok_vqa_sem_builder import AOKVQA_SEM_Builder
+from lavis.datasets.builders.gqa_sem_builder import GQA_SEM_Builder
+from lavis.datasets.builders.gqa_vqax_builder import GQA_VQAX_Builder
+
 from lavis.common.registry import registry
 
 __all__ = [
@@ -65,6 +70,10 @@ __all__ = [
     "VGCaptionBuilder",
     "VGVQABuilder",
     "AVSDDialBuilder",
+    "VQA_X_SEM_Builder",
+    "AOKVQA_SEM_Builder",
+    "GQA_SEM_Builder",
+    "GQA_VQAX_Builder",
 ]
 
 

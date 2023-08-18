@@ -1,0 +1,71 @@
+ # Copyright (c) 2022, salesforce.com, inc.
+ # All rights reserved.
+ # SPDX-License-Identifier: BSD-3-Clause
+ # For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+
+model:
+  arch: blip2_t5_sem
+  model_type: pretrain_flant5xl
+  load_pretrained: True
+  # intialize stage 2 pretraining from stage 1 pretrained model
+  pretrained: "https://storage.googleapis.com/sfr-vision-language-research/LAVIS/models/BLIP2/blip2_pretrained.pth"
+
+  max_txt_len: 80
+
+  find_unused_parameters: True
+
+  freeze_vit: True
+
+datasets:
+#  vqa_x_sem:
+#  gqa_sem:
+#  aok_vqa_sem:
+  gqa_vqax: # this is the pseudo_label_dataset we built
+    vis_processor:
+      train:
+        name: "blip_image_eval"
+        image_size: 224
+      eval:
+        name: "blip_image_eval"
+        image_size: 224
+    text_processor:
+      train:
+        name: "blip_question"
+      eval:
+        name: "blip_question"
+    build_info:
+      images:
+        storage: '/path_to_your/SEM/Datasets/images/'
+
+
+run:
+  task: vqa_bbox
+  # optimizer
+  lr_sched: "linear_warmup_cosine_lr"
+  init_lr: 1e-5
+  min_lr: 1e-6
+  warmup_lr: 1e-6
+
+  weight_decay: 0.05
+  max_epoch: 1
+  batch_size_train: 8
+  batch_size_eval: 8
+  num_workers: 4
+  warmup_steps: 2000
+
+  seed: 42
+  output_dir: "output/BLIP2/Pretrain_stage2_bbox"
+
+  amp: False
+  resume_ckpt_path: null
+
+  evaluate: False
+  train_splits: ["train"]
+  valid_splits: ["val"]
+  #test_splits: ["test"]
+
+
+  device: "cuda"
+  world_size: 1
+  dist_url: "env://"
+  distributed: True

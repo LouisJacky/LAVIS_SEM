@@ -100,35 +100,14 @@ class Blip2T5_SEM(Blip2Base):
             param.requires_grad = False
             #param.data = param.data.bfloat16()
 
-        # for i in range(24):
-        #     for name, param in self.t5_model.encoder.block[i].layer_x[0].named_parameters():
-        #         param.requires_grad = True
-        #         param.data = param.data.bfloat16()
-
         for i in range(24):
             for name, param in self.t5_model.decoder.block[i].layer[1].named_parameters():
                 param.requires_grad = True
                 #param.data = param.data.bfloat16()
 
-        for name, param in self.t5_model.decoder.block_x_tail.named_parameters():
-            param.requires_grad = True
-            #param.data = param.data.bfloat16()
-
-        for name, param in self.t5_model.decoder.block_x_head.named_parameters():
-            param.requires_grad = True
-            #param.data = param.data.bfloat16()
-
         for name, param in self.t5_model.decoder.final_layer_norm.named_parameters():
             param.requires_grad = False
             #param.data = param.data.half()
-
-        # for name, param in self.t5_model.encoder.embed_tokens.named_parameters():
-        #     param.requires_grad = True
-        #     #param.data = param.data.half()
-        #
-        # for name, param in self.t5_model.decoder.embed_tokens.named_parameters():
-        #     param.requires_grad = True
-        #     #param.data = param.data.half()
 
         for name, param in self.t5_model.shared.named_parameters():
             param.requires_grad = False
@@ -199,8 +178,6 @@ class Blip2T5_SEM(Blip2Base):
             #     input_text.append(i.split(".")[0])
 
             output_tokens = self.t5_tokenizer(
-                #samples["text_output"],
-                #samples["text_output_E"],
                 samples["full_explanation_list"],
                 #input_text,
                 padding="longest",
@@ -216,11 +193,7 @@ class Blip2T5_SEM(Blip2Base):
             )
 
             inputs_embeds = self.t5_model.encoder.embed_tokens(input_tokens.input_ids)
-            # inputs_embeds_r = torch.cat([inputs_t5, inputs_embeds], dim=1)
-            # inputs_E = self.CrossAttention_X(encoder_hidden_states=inputs_embeds_r,
-            #                                       hidden_states=inputs_E,
-            #                                       encoder_attention_mask=encoder_atts,
-            #                                       )[0]
+
             inputs_embeds_e = torch.cat([inputs_t5, inputs_embeds, inputs_E], dim=1)
 
 

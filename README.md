@@ -8,15 +8,14 @@ SEM是一个针对自然语言解释任务的视觉语言模型，能够基于�
 ## Install
 我们的工作基于开源深度学习库[LAVIS](https://github.com/salesforce/LAVIS)，和预训练多模态模型[BLIP-2](https://github.com/salesforce/LAVIS/tree/main/projects/blip2)，请按照以下步骤进行环境配置：
 
-1. Creating conda environment
+1. 创建conda环境
 
 ```bash
 conda create -n lavis_sem python=3.8
 conda activate lavis_sem
 ```
 
-2. for development, you may build from source
-
+2. 从源代码构建环境
 ```bash
 git clone https://github.com/LouisJacky/LAVIS_SEM
 cd LAVIS_SEM
@@ -228,6 +227,7 @@ python score.py
 
 ## Contact us
 如果您有任何问题、意见或建议，请随时通过 lavis_sem@outlook.com 与我们联系。
+
 If you have any questions, comments or suggestions, please do not hesitate to contact us at lavis_sem@outlook.com.
 
 ## License

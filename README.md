@@ -1,328 +1,234 @@
-<p align="center">
-    <br>
-    <img src="docs/_static/logo_final.png" width="400"/>
-    <br>
-<p>
-
-<div align="center">
-  <a href="https://github.com/salesforce/LAVIS/releases"><img alt="Latest Release" src="https://img.shields.io/github/release/salesforce/LAVIS.svg" /></a>
-  <a href="https://opensource.salesforce.com/LAVIS/index.html">
-  <img alt="docs" src="https://github.com/salesforce/LAVIS/actions/workflows/docs.yaml/badge.svg"/>
-  <a href="https://opensource.org/licenses/BSD-3-Clause">
-  <img alt="license" src="https://img.shields.io/badge/License-BSD_3--Clause-blue.svg"/>
-  </a> 
-  <a href="https://pepy.tech/project/salesforce-lavis">
-  <img alt="Downloads" src="https://pepy.tech/badge/salesforce-lavis">
-  </a>
-</div>
-
-<div align="center">
-<a href="https://opensource.salesforce.com/LAVIS//latest/benchmark.html">Benchmark</a>,
-<a href="https://arxiv.org/abs/2209.09019">Technical Report</a>,
-<a href="https://opensource.salesforce.com/LAVIS//latest/index.html">Documentation</a>,
-<a href="https://github.com/salesforce/LAVIS/tree/main/examples">Jupyter Notebook Examples</a>,
-<a href="https://blog.salesforceairesearch.com/lavis-language-vision-library/">Blog</a>
-</div>
-
-# LAVIS - A Library for Language-Vision Intelligence
-
-## What's New: 🎉 
-  * [Model Release] November 2023, released implementation of **X-InstructBLIP** <br>
-  [Paper](https://arxiv.org/pdf/2311.18799.pdf), [Project Page](https://github.com/salesforce/LAVIS/tree/main/projects/xinstructblip), [Website](https://artemisp.github.io/X-InstructBLIP-page/), [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/salesforce/LAVIS/blob/main/projects/xinstructblip/demo/run_demo.ipynb)
-  > A simple, yet effective, cross-modality framework built atop frozen LLMs that allows the integration of various modalities (image, video, audio, 3D) without extensive modality-specific customization.
-  * [Model Release] July 2023, released implementation of **BLIP-Diffusion** <br>
-  [Paper](https://arxiv.org/abs/2305.06500), [Project Page](https://github.com/salesforce/LAVIS/tree/main/projects/blip-diffusion), [Website](https://dxli94.github.io/BLIP-Diffusion-website/)
-  > A text-to-image generation model that trains 20x than DreamBooth. Also facilitates zero-shot subject-driven generation and editing.
-  * [Model Release] May 2023, released implementation of **InstructBLIP** <br>
-  [Paper](https://arxiv.org/abs/2305.06500), [Project Page](https://github.com/salesforce/LAVIS/tree/main/projects/instructblip)    
-  > A new vision-language instruction-tuning framework using BLIP-2 models, achieving state-of-the-art zero-shot generalization performance on a wide range of vision-language tasks.
-  * [Model Release] Jan 2023, released implementation of **BLIP-2** <br>
-  [Paper](https://arxiv.org/abs/2301.12597), [Project Page](https://github.com/salesforce/LAVIS/tree/main/projects/blip2), [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/salesforce/LAVIS/blob/main/examples/blip2_instructed_generation.ipynb)
-  > A generic and efficient pre-training strategy that easily harvests development of pretrained vision models and large language models (LLMs) for vision-language pretraining. BLIP-2 beats Flamingo on zero-shot VQAv2 (**65.0** vs **56.3**), establishing new state-of-the-art on zero-shot captioning (on NoCaps **121.6** CIDEr score vs previous best **113.2**). In addition, equipped with powerful LLMs (e.g. OPT, FlanT5), BLIP-2 also unlocks the new **zero-shot instructed vision-to-language generation** capabilities for various interesting applications!
-  * Jan 2023, LAVIS is now available on [PyPI](https://pypi.org/project/salesforce-lavis/) for installation!
-  * [Model Release] Dec 2022, released implementation of **Img2LLM-VQA** (**CVPR 2023**, _"From Images to Textual Prompts: Zero-shot VQA with Frozen Large Language Models"_, by Jiaxian Guo et al) <br>
-  [Paper](https://arxiv.org/pdf/2212.10846.pdf), [Project Page](https://github.com/salesforce/LAVIS/tree/main/projects/img2llm-vqa), [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/salesforce/LAVIS/blob/main/projects/img2llm-vqa/img2llm_vqa.ipynb)
-  > A plug-and-play module that enables off-the-shelf use of Large Language Models (LLMs) for visual question answering (VQA). Img2LLM-VQA surpasses Flamingo on zero-shot VQA on VQAv2 (61.9 vs 56.3), while in contrast requiring no end-to-end training! 
-  * [Model Release] Oct 2022, released implementation of **PNP-VQA** (**EMNLP Findings 2022**, _"Plug-and-Play VQA: Zero-shot VQA by Conjoining Large Pretrained Models with Zero Training"_, by Anthony T.M.H. et al), <br> 
-  [Paper](https://arxiv.org/abs/2210.08773), [Project Page](https://github.com/salesforce/LAVIS/tree/main/projects/pnp-vqa), [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/salesforce/LAVIS/blob/main/projects/pnp-vqa/pnp_vqa.ipynb))
-  >  A modular zero-shot VQA framework that requires no PLMs training, achieving SoTA zero-shot VQA performance. 
-
-## Technical Report and Citing LAVIS
-You can find more details in our [technical report](https://arxiv.org/abs/2209.09019).
-
-**If you're using LAVIS in your research or applications, please cite it using this BibTeX**:
-```bibtex
-@inproceedings{li-etal-2023-lavis,
-    title = "{LAVIS}: A One-stop Library for Language-Vision Intelligence",
-    author = "Li, Dongxu  and
-      Li, Junnan  and
-      Le, Hung  and
-      Wang, Guangsen  and
-      Savarese, Silvio  and
-      Hoi, Steven C.H.",
-    booktitle = "Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics (Volume 3: System Demonstrations)",
-    month = jul,
-    year = "2023",
-    address = "Toronto, Canada",
-    publisher = "Association for Computational Linguistics",
-    url = "https://aclanthology.org/2023.acl-demo.3",
-    pages = "31--41",
-    abstract = "We introduce LAVIS, an open-source deep learning library for LAnguage-VISion research and applications. LAVIS aims to serve as a one-stop comprehensive library that brings recent advancements in the language-vision field accessible for researchers and practitioners, as well as fertilizing future research and development. It features a unified interface to easily access state-of-the-art image-language, video-language models and common datasets. LAVIS supports training, evaluation and benchmarking on a rich variety of tasks, including multimodal classification, retrieval, captioning, visual question answering, dialogue and pre-training. In the meantime, the library is also highly extensible and configurable, facilitating future development and customization. In this technical report, we describe design principles, key components and functionalities of the library, and also present benchmarking results across common language-vision tasks.",
-}
-```
-
-
-## Table of Contents
-  - [Introduction](#introduction)
-  - [Installation](#installation)
-  - [Getting Started](#getting-started)
-    - [Model Zoo](#model-zoo)
-    - [Image Captioning](#image-captioning)
-    - [Visual question answering (VQA)](#visual-question-answering-vqa)
-    - [Unified Feature Extraction Interface](#unified-feature-extraction-interface)
-    - [Load Datasets](#load-datasets)
-  - [Jupyter Notebook Examples](#jupyter-notebook-examples)
-  - [Resources and Tools](#resources-and-tools)
-  - [Documentations](#documentations)
-  - [Ethical and Responsible Use](#ethical-and-responsible-use)
-  - [Technical Report and Citing LAVIS](#technical-report-and-citing-lavis)
-  - [License](#license)
-
+# SEM:Self-explanatory Method for Model Reasoning Process in Visual Question  Answering
 ## Introduction
-LAVIS is a Python deep learning library for LAnguage-and-VISion intelligence research and applications. This library aims to provide engineers and researchers with a one-stop solution to rapidly develop models for their specific multimodal scenarios, and benchmark them across standard and customized datasets.
-It features a unified interface design to access
-- **10+** tasks
-(retrieval, captioning, visual question answering, multimodal classification etc.);
-- **20+** datasets (COCO, Flickr, Nocaps, Conceptual
-Commons, SBU, etc.);
-- **30+** pretrained weights of state-of-the-art foundation language-vision models and their task-specific adaptations, including [ALBEF](https://arxiv.org/pdf/2107.07651.pdf),
-[BLIP](https://arxiv.org/pdf/2201.12086.pdf), [ALPRO](https://arxiv.org/pdf/2112.09583.pdf), [CLIP](https://arxiv.org/pdf/2103.00020.pdf).
-<p align="center">
-    <br>
-    <img src="assets/demo-6.png"/>
-    <br>
-<p>
+SEM是一个针对自然语言解释任务的视觉语言模型，能够基于模型解决视觉问答任务时的推理过程生成忠实的自然语言解释。
+<br>
+    <img src="docs/_static/model.png" width="400"/>
+<br>
 
-Key features of LAVIS include:
+## Install
+我们的工作基于开源深度学习库[LAVIS](https://github.com/salesforce/LAVIS)，和预训练多模态模型[BLIP-2](https://github.com/salesforce/LAVIS/tree/main/projects/blip2)，请按照以下步骤进行环境配置：
 
-- **Unified and Modular Interface**: facilitating to easily leverage and repurpose existing modules (datasets, models, preprocessors), also to add new modules.
-
-- **Easy Off-the-shelf Inference and Feature Extraction**: readily available pre-trained models let you take advantage of state-of-the-art multimodal understanding and generation capabilities on your own data.
-
-- **Reproducible Model Zoo and Training Recipes**: easily replicate and extend state-of-the-art models on existing and new tasks.
-
-- **Dataset Zoo and Automatic Downloading Tools**: it can be a hassle to prepare the many language-vision datasets. LAVIS provides automatic downloading scripts to help prepare a large variety of datasets and their annotations.
-
-
-The following table shows the supported tasks, datasets and models in our library. This is a continuing effort and we are working on further growing the list.
-
-|                  Tasks                   |     Supported Models     |             Supported Datasets             |
-| :--------------------------------------: | :----------------------: | :----------------------------------------: |
-|         Image-text Pre-training          |       ALBEF, BLIP        | COCO, VisualGenome, SBU ConceptualCaptions |
-|           Image-text Retrieval           |    ALBEF, BLIP, CLIP     |              COCO, Flickr30k               |
-|           Text-image Retrieval           |    ALBEF, BLIP, CLIP     |              COCO, Flickr30k               |
-|        Visual Question Answering         |       ALBEF, BLIP        |           VQAv2, OKVQA, A-OKVQA            |
-|             Image Captioning             |           BLIP           |                COCO, NoCaps                |
-|           Image Classification           |           CLIP           |                  ImageNet                  |
-| Natural Language Visual Reasoning (NLVR) |       ALBEF, BLIP        |                   NLVR2                    |
-|          Visual Entailment (VE)          |          ALBEF           |                  SNLI-VE                   |
-|             Visual Dialogue              |           BLIP           |                  VisDial                   |
-|           Video-text Retrieval           |       BLIP, ALPRO        |               MSRVTT, DiDeMo               |
-|           Text-video Retrieval           |       BLIP, ALPRO        |               MSRVTT, DiDeMo               |
-|    Video Question Answering (VideoQA)    |       BLIP, ALPRO        |                MSRVTT, MSVD                |
-|              Video Dialogue              |         VGD-GPT          |                    AVSD                    |
-|      Multimodal Feature Extraction       | ALBEF, CLIP, BLIP, ALPRO |                 customized                 |
-|         Text-to-image Generation         |      [COMING SOON]       |                                            |
-
-## Installation
-
-1. (Optional) Creating conda environment
+1. Creating conda environment
 
 ```bash
-conda create -n lavis python=3.8
-conda activate lavis
+conda create -n lavis_sem python=3.8
+conda activate lavis_sem
 ```
 
-2. install from [PyPI](https://pypi.org/project/salesforce-lavis/)
-```bash
-pip install salesforce-lavis
-```
-    
-3. Or, for development, you may build from source
+2. for development, you may build from source
 
 ```bash
-git clone https://github.com/salesforce/LAVIS.git
-cd LAVIS
+git clone https://github.com/LouisJacky/LAVIS_SEM
+cd LAVIS_SEM
 pip install -e .
 ```
 
-## Getting Started
-### Model Zoo
-Model zoo summarizes supported models in LAVIS, to view:
-```python
-from lavis.models import model_zoo
-print(model_zoo)
-# ==================================================
-# Architectures                  Types
-# ==================================================
-# albef_classification           ve
-# albef_feature_extractor        base
-# albef_nlvr                     nlvr
-# albef_pretrain                 base
-# albef_retrieval                coco, flickr
-# albef_vqa                      vqav2
-# alpro_qa                       msrvtt, msvd
-# alpro_retrieval                msrvtt, didemo
-# blip_caption                   base_coco, large_coco
-# blip_classification            base
-# blip_feature_extractor         base
-# blip_nlvr                      nlvr
-# blip_pretrain                  base
-# blip_retrieval                 coco, flickr
-# blip_vqa                       vqav2, okvqa, aokvqa
-# clip_feature_extractor         ViT-B-32, ViT-B-16, ViT-L-14, ViT-L-14-336, RN50
-# clip                           ViT-B-32, ViT-B-16, ViT-L-14, ViT-L-14-336, RN50
-# gpt_dialogue                   base
+3. 创建用于评分的conda环境
+```bash
+conda create -n score python=3.8
+conda activate score
+pip install -r requirements_score.txt
 ```
 
-Let’s see how to use models in LAVIS to perform inference on example data. We first load a sample image from local.
+## Dataset
+### annotation
+1. 请从[本链接](https://drive.google.com/drive/folders/1RvuxnmcMbPQUUfqJodzWo8J2ZtDZH89A?usp=drive_link)下载所需数据集的标注json文件，并保存在SEM/Datasets/annotation/路径下
+其中pseudo_label_dataset.json是我们构建的伪标签数据集，复现本工作的性能比较实验需要以下文件：
+- pseudo_label_dataset.json
+- VQA-X_train.json
+- VQA-X_val.json
+- VQA-X_test.json
+- vqaX_test.json
+- vqaX_test_annot_exp.json
 
-```python
-import torch
-from PIL import Image
-# setup device to use
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-# load sample image
-raw_image = Image.open("docs/_static/merlion.png").convert("RGB")
+2. 将LAVIS_SEM/lavis/config/datasets/路径下的aok_vqa_sem.yaml、gqa_sem.yaml、gqa_vqax.yaml、vqa_x_sem.yaml、vqa_x_sem_eval.yaml文件中的"/path_to_your/SEM/"字符串改为你实际的SEM文件存储路径。
+
+### image
+本工作的性能比较实验需要以下数据集：
+- 请下载[COCO_train_2014](http://images.cocodataset.org/zips/train2014.zip)数据集图像，将其中的图像移动到SEM/Datasets/images/VQA_X_train_images/路径下
+- 请下载[COCO_val_2014](http://images.cocodataset.org/zips/val2014.zip)数据集图像，将其中的图像移动到SEM/Datasets/images/VQA_X_val_images/路径下
+- 请下载[GQA](https://downloads.cs.stanford.edu/nlp/data/gqa/images.zip)数据集图像，将其中的图像移动到SEM/Datasets/images/GQA_train_images/路径下
+
+对比实验还需要以下数据集：
+- 请下载[COCO_train_2017](http://images.cocodataset.org/zips/train2017.zip)数据集图像，将其中的图像移动到SEM/Datasets/images/AOK_VQA_train_images/路径下
+
+## Train
+1. 请在lavis/projects/blip2/train/sem_train.yaml文件中设置训练参数，例如：
+
+```yaml
+#性能比较实验中，使用伪标签数据集的设置
+model:  
+  arch: blip2_t5_sem  
+  model_type: pretrain_flant5xl  
+  load_pretrained: True  
+  
+  pretrained: "https://storage.googleapis.com/sfr-vision-language-research/LAVIS/models/BLIP2/blip2_pretrained.pth"  
+  max_txt_len: 80  
+  find_unused_parameters: True  
+  freeze_vit: True  
+  
+datasets:  
+  gqa_vqax: # this is the pseudo_label_dataset we built  
+  vis_processor:  
+      train:  
+        name: "blip_image_eval"  
+  image_size: 224  
+      eval:  
+        name: "blip_image_eval"  
+  image_size: 224  
+    text_processor:  
+      train:  
+        name: "blip_question"  
+  eval:  
+        name: "blip_question"  
+  build_info:  
+      images:  
+        storage: '/path_to_your/SEM/Datasets/images/'  
+  
+  
+run:  
+  task: vqa_bbox  
+  # optimizer  
+  lr_sched: "linear_warmup_cosine_lr"  
+  init_lr: 1e-5  
+  min_lr: 1e-6  
+  warmup_lr: 1e-6  
+  weight_decay: 0.05  
+  max_epoch: 2  
+  batch_size_train: 8  
+  batch_size_eval: 8  
+  num_workers: 4  
+  warmup_steps: 2000  
+  seed: 42  
+  output_dir: "output/SEM/finetuned"  
+  
+  amp: False  
+  resume_ckpt_path: null  
+  evaluate: False  
+  train_splits: ["train"]  
+  valid_splits: ["val"] 
+  
+  device: "cuda"  
+  world_size: 1  
+  dist_url: "env://"  
+  distributed: True
+```
+```yaml
+#性能比较实验中，不使用伪标签数据集需要修改：
+model:  
+  arch: blip2_t5_sem
+  
+datasets:  
+  vqa_x_sem: 
+  
+run:  
+  max_epoch: 3
+```
+```yaml
+#消融实验中，不使用探针结构需要修改：
+model:  
+  arch: blip2_t5_r
+```
+详细的参数设置方法请参考说明文档docs/tutorial.configs.rst
+
+2. 使用以下命令进行训练：
+```bash
+conda activate lavis_sem
+python -m torch.distributed.run --nproc_per_node=1 train_sem.py
 ```
 
-This example image shows [Merlion park](https://en.wikipedia.org/wiki/Merlion) ([source](https://theculturetrip.com/asia/singapore/articles/what-exactly-is-singapores-merlion-anyway/)), a landmark in Singapore.
-
-
-### Image Captioning
-In this example, we use the BLIP model to generate a caption for the image. To make inference even easier, we also associate each
-pre-trained model with its preprocessors (transforms), accessed via ``load_model_and_preprocess()``.
-
+3. 训练结束后，在lavis/output/SEM/finetuned路径下将生成以项目id命名的文件夹，其中的checkpoint_best.pth文件保存了训练参数。请使用LAVIS_SEM/SEM/Processer文件夹中的merge.py程序将训练参数与预训练参数合并。注意修改其中的project_id、path_to_LAVIS_SEM变量为你的实际路径。
+<a id="section1"></a>
 ```python
-import torch
-from lavis.models import load_model_and_preprocess
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-# loads BLIP caption base model, with finetuned checkpoints on MSCOCO captioning dataset.
-# this also loads the associated image processors
-model, vis_processors, _ = load_model_and_preprocess(name="blip_caption", model_type="base_coco", is_eval=True, device=device)
-# preprocess the image
-# vis_processors stores image transforms for "train" and "eval" (validation / testing / inference)
-image = vis_processors["eval"](raw_image).unsqueeze(0).to(device)
-# generate caption
-model.generate({"image": image})
-# ['a large fountain spewing water into the air']
+project_id = "your_project_id" # eg: 20240509214  
+path_to_LAVIS_SEM ="/path_to_your/LAVIS_SEM"  
+```
+```bash
+python merge.py
 ```
 
-### Visual question answering (VQA)
-BLIP model is able to answer free-form questions about images in natural language.
-To access the VQA model, simply replace the ``name`` and ``model_type`` arguments
-passed to ``load_model_and_preprocess()``.
 
-```python
-from lavis.models import load_model_and_preprocess
-model, vis_processors, txt_processors = load_model_and_preprocess(name="blip_vqa", model_type="vqav2", is_eval=True, device=device)
-# ask a random question.
-question = "Which city is this photo taken?"
-image = vis_processors["eval"](raw_image).unsqueeze(0).to(device)
-question = txt_processors["eval"](question)
-model.predict_answers(samples={"image": image, "text_input": question}, inference_method="generate")
-# ['singapore']
+## Evaluate
+1. 请在LAVIS_SEM\lavis\projects\blip2\eval\sem_eval.yaml文件中设置测试参数，将pretrained参数中的project_id和path_to_LAVIS_SEM替换为与[训练步骤](#section1)中相同的字符串。
+```yaml
+model:  
+  arch: blip2_t5_sem  
+  model_type: pretrain_flant5xl  
+  use_grad_checkpoint: False  
+  load_pretrained: True  
+  
+  pretrained: "{path_to_LAVIS_SEM}/SEM/Checkpoints/merged_{project_id}.pth"  
+  
+  evaluate: True  
+  
+datasets:  
+  vqa_x_sem: # name of the dataset builder  
+  type: eval  
+    vis_processor:  
+        eval:  
+          name: "blip_image_eval"  
+  image_size: 224  
+    text_processor:  
+        eval:  
+          name: "blip_question"  
+  
+run:  
+  task: vqa_bbox  
+  # optimization-specific  
+  batch_size_train: 16  
+  batch_size_eval: 16  
+  num_workers: 4  
+  
+  # inference-specific  
+  max_len: 80  
+  min_len: 1  
+  num_beams: 5  
+  inference_method: "generate"  
+  prompt: "{}"  
+  
+  seed: 42  
+  output_dir: "output/SEM/eval"  
+  
+  evaluate: True  
+  test_splits: ["test"]  
+  
+  # distribution-specific  
+  device: "cuda"  
+  world_size: 1  
+  dist_url: "env://"  
+  distributed: True
 ```
-
-### Unified Feature Extraction Interface
-
-LAVIS provides a unified interface to extract features from each architecture. 
-To extract features, we load the feature extractor variants of each model.
-The multimodal feature can be used for multimodal classification.
-The low-dimensional unimodal features can be used to compute cross-modal similarity.
-
-
-```python
-from lavis.models import load_model_and_preprocess
-model, vis_processors, txt_processors = load_model_and_preprocess(name="blip_feature_extractor", model_type="base", is_eval=True, device=device)
-caption = "a large fountain spewing water into the air"
-image = vis_processors["eval"](raw_image).unsqueeze(0).to(device)
-text_input = txt_processors["eval"](caption)
-sample = {"image": image, "text_input": [text_input]}
-
-features_multimodal = model.extract_features(sample)
-print(features_multimodal.multimodal_embeds.shape)
-# torch.Size([1, 12, 768]), use features_multimodal[:,0,:] for multimodal classification tasks
-
-features_image = model.extract_features(sample, mode="image")
-features_text = model.extract_features(sample, mode="text")
-print(features_image.image_embeds.shape)
-# torch.Size([1, 197, 768])
-print(features_text.text_embeds.shape)
-# torch.Size([1, 12, 768])
-
-# low-dimensional projected features
-print(features_image.image_embeds_proj.shape)
-# torch.Size([1, 197, 256])
-print(features_text.text_embeds_proj.shape)
-# torch.Size([1, 12, 256])
-similarity = features_image.image_embeds_proj[:,0,:] @ features_text.text_embeds_proj[:,0,:].t()
-print(similarity)
-# tensor([[0.2622]])
+2. 请使用以下命令进行测试：
+```bash
+python -m torch.distributed.run --nproc_per_node=1 evaluate_sem.py
 ```
+3. 测试结束后，将在LAVIS_SEM/lavis/output/SEM/eval/路径下将生成以project_id<a id="section2"></a>命名的文件夹，其中的/result/test_vqa_result_rank0.json文件保存了预测结果。
 
-### Load Datasets
-LAVIS inherently supports a wide variety of common language-vision datasets by providing [automatic download tools](https://opensource.salesforce.com/LAVIS//latest/benchmark) to help download and organize these datasets. After downloading, to load the datasets, use the following code:
-
+## Score
+1. 请从[本链接](https://drive.google.com/drive/folders/1nya7F-055ExZcnwSUMuWB9gtMmQbAO2L?usp=drive_link)下载cococaption文件夹，将其放置在SEM/Processer/路径下。
+2. 修改LAVIS_SEM\SEM\Processer\cococaption\pycocoevalcap\spice\spice.py文件中的CACHE_DIR变量为你的实际路径。
 ```python
-from lavis.datasets.builders import dataset_zoo
-dataset_names = dataset_zoo.get_names()
-print(dataset_names)
-# ['aok_vqa', 'coco_caption', 'coco_retrieval', 'coco_vqa', 'conceptual_caption_12m',
-#  'conceptual_caption_3m', 'didemo_retrieval', 'flickr30k', 'imagenet', 'laion2B_multi',
-#  'msrvtt_caption', 'msrvtt_qa', 'msrvtt_retrieval', 'msvd_caption', 'msvd_qa', 'nlvr',
-#  'nocaps', 'ok_vqa', 'sbu_caption', 'snli_ve', 'vatex_caption', 'vg_caption', 'vg_vqa']
+CACHE_DIR = '/path_to_your/.cache'
 ```
-After downloading the images, we can use ``load_dataset()`` to obtain the dataset.
+3. 请使用LAVIS_SEM/SEM/Processer文件夹中的score.py程序进行评分。注意将其中的[project_id](#section2)、path_to_LAVIS_SEM变量替换为你的实际路径，并自定义一个后缀名tail_name。
 ```python
-from lavis.datasets.builders import load_dataset
-coco_dataset = load_dataset("coco_caption")
-print(coco_dataset.keys())
-# dict_keys(['train', 'val', 'test'])
-print(len(coco_dataset["train"]))
-# 566747
-print(coco_dataset["train"][0])
-# {'image': <PIL.Image.Image image mode=RGB size=640x480>,
-#  'text_input': 'A woman wearing a net on her head cutting a cake. ',
-#  'image_id': 0}
+project_id = "your_project_id"  
+tail_name = project_id+"_your_tail_name"  
+path_to_LAVIS_SEM ="/path_to_your/LAVIS_SEM"
 ```
-
-If you already host a local copy of the dataset, you can pass in the ``vis_path`` argument to change the default location to load images.
-
+4. 请使用以下命令进行评分
+```bash
+conda activate score
+python score.py
+```
+评分结果将保存在以下路径的json文件中：
 ```python
-coco_dataset = load_dataset("coco_caption", vis_path=YOUR_LOCAL_PATH)
+{path_to_LAVIS_SEM}/SEM/Results/save_scores_pathExp_{tail_name}.json
 ```
-
-## Jupyter Notebook Examples
-See [examples](https://github.com/salesforce/LAVIS/tree/main/examples) for more inference examples, e.g. captioning, feature extraction, VQA, GradCam, zeros-shot classification.
-
-## Resources and Tools
-- **Benchmarks**: see [Benchmark](https://opensource.salesforce.com/LAVIS//latest/benchmark) for instructions to evaluate and train supported models.
-- **Dataset Download and Browsing**: see [Dataset Download](https://opensource.salesforce.com/LAVIS//latest/benchmark) for instructions and automatic tools on download common language-vision datasets.
-- **GUI Demo**: to run the demo locally, run ```bash run_scripts/run_demo.sh``` and then follow the instruction on the prompts to view in browser. A web demo is coming soon.
-
-
-## Documentations
-For more details and advanced usages, please refer to
-[documentation](https://opensource.salesforce.com/LAVIS//latest/index.html#).
-
-## Ethical and Responsible Use
-We note that models in LAVIS provide no guarantees on their multimodal abilities; incorrect or biased predictions may be observed. In particular, the datasets and pretrained models utilized in LAVIS may contain socioeconomic biases which could result in misclassification and other unwanted behaviors such as offensive or inappropriate speech. We strongly recommend that users review the pre-trained models and overall system in LAVIS before practical adoption. We plan to improve the library by investigating and mitigating these potential biases and
-inappropriate behaviors in the future.
-
 
 ## Contact us
-If you have any questions, comments or suggestions, please do not hesitate to contact us at lavis@salesforce.com.
+如果您有任何问题、意见或建议，请随时通过 lavis_sem@outlook.com 与我们联系。
+If you have any questions, comments or suggestions, please do not hesitate to contact us at lavis_sem@outlook.com.
 
 ## License
 [BSD 3-Clause License](LICENSE.txt)

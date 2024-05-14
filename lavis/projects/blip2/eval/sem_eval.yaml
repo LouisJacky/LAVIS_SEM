@@ -15,7 +15,8 @@ model:
   use_grad_checkpoint: False
   load_pretrained: True
 
-  pretrained: "/data/A/lvjq/.cache/torch/hub/my_checkpoints/merged_contrast_2.pth"
+  pretrained: "{path_to_LAVIS_SEM}/SEM/Checkpoints/merged_SEM_PseudoLabels.pth"
+  #pretrained: "{path_to_LAVIS_SEM}/SEM/Checkpoints/merged_{project_id}.pth"
 
   evaluate: True
 
@@ -46,7 +47,7 @@ run:
   prompt: "{}"
 
   seed: 42
-  output_dir: "output/BLIP2/VQA_bbox_eval"
+  output_dir: "output/SEM/eval"
 
   evaluate: True
   test_splits: ["test"]

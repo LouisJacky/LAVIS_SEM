@@ -2,7 +2,7 @@
 ## Introduction
 SEM是一个针对自然语言解释任务的视觉语言模型，能够基于模型解决视觉问答任务时的推理过程生成忠实的自然语言解释。
 <br>
-    <img src="docs/_static/model.png" width="400"/>
+    <img src="docs/_static/model.png" width="600"/>
 <br>
 
 ## Install
@@ -136,7 +136,8 @@ conda activate lavis_sem
 python -m torch.distributed.run --nproc_per_node=1 train_sem.py
 ```
 
-3. 训练结束后，在lavis/output/SEM/finetuned路径下将生成以项目id命名的文件夹，其中的checkpoint_best.pth文件保存了训练参数。请使用LAVIS_SEM/SEM/Processer文件夹中的merge.py程序将训练参数与预训练参数合并。注意修改其中的project_id、path_to_LAVIS_SEM变量为你的实际路径。
+## Checkpoints
+1. 训练结束后，在lavis/output/SEM/finetuned路径下将生成以项目id命名的文件夹，其中的checkpoint_best.pth文件保存了训练参数。请使用LAVIS_SEM/SEM/Processer文件夹中的merge.py程序将训练参数与预训练参数合并。注意修改其中的project_id、path_to_LAVIS_SEM变量为你的实际路径。
 <a id="section1"></a>
 ```python
 project_id = "your_project_id" # eg: 20240509214  
@@ -145,10 +146,13 @@ path_to_LAVIS_SEM ="/path_to_your/LAVIS_SEM"
 ```bash
 python merge.py
 ```
+2. 合并后的模型参数保存在SEM/Checkpoints文件夹下，你可以从[本链接]()下载我们在性能比较实验中训练得到的模型参数：
+- merged_SEM_PseudoLabels.pth - 使用我们构建的伪标签数据集训练得到的模型参数
+- merged_SEM_NoPseudoLabels.pth -不使用伪标签数据集，只用VQA-X训练集训练得到的模型参数
 
 
 ## Evaluate
-1. 请在LAVIS_SEM\lavis\projects\blip2\eval\sem_eval.yaml文件中设置测试参数，将pretrained参数中的project_id和path_to_LAVIS_SEM替换为与[训练步骤](#section1)中相同的字符串。
+1. 请在LAVIS_SEM\lavis\projects\blip2\eval\sem_eval.yaml文件中设置测试参数，将pretrained参数中的project_id和path_to_LAVIS_SEM替换为与[之前步骤](#section1)中相同的字符串。
 ```yaml
 model:  
   arch: blip2_t5_sem  
@@ -224,6 +228,9 @@ python score.py
 ```python
 {path_to_LAVIS_SEM}/SEM/Results/save_scores_pathExp_{tail_name}.json
 ```
+
+## Results
+你可以从[本链接](https://drive.google.com/drive/folders/1WjVJ5OVXaNNto-RRl61RT4Y-58nzVSmo?usp=drive_link)下载我们在性能比较实验中得到的测试集预测结果和评分结果
 
 ## Contact us
 如果您有任何问题、意见或建议，请随时通过 lavis_sem@outlook.com 与我们联系。

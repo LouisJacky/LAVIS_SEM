@@ -70,11 +70,15 @@ def filter_and_get_scores(resFileExp, save_scores_pathExp, full_predictions, exp
     for item in full_predictions:
         pred_answers[item['image_id']] = item['caption'].split("because")[0].strip()
 
-    correct_keys = []
-    for key, value in pred_answers.items():
-        gt_answer = gt_answers[key]
-        if value == gt_answer:
-            correct_keys.append(key)
+    # # 这段注释的代码将使用微调后解码器输出的答案来判断预测样本是否预测正确，而我们的设计是使用原解码器输出的答案
+    # correct_keys = []
+    # for key, value in pred_answers.items():
+    #     gt_answer = gt_answers[key]
+    #     if value == gt_answer:
+    #         correct_keys.append(key)
+    # 为了避免重复的预测工作，我们将原解码器预测正确的样本id事先保存，在每次需要计算解释分数时加载。
+    with open(f'{path_to_LAVIS_SEM}/SEM/Results/correct_question_ids_blip2_t5.json', 'r') as f:
+        correct_keys = json.load(f)
 
     exp_preds = [item for item in exp_predictions if item['image_id'] in correct_keys]
 
@@ -101,6 +105,7 @@ def unfilter_and_get_scores(resFileExp, save_scores_pathExp, full_predictions, e
     for item in full_predictions:
         pred_answers[item['image_id']] = item['caption'].split("because")[0].strip()
 
+    # 不过滤预测样本的情况下，我们不需要加载原解码器预测正确的id，直接使用所有预测样本计算解释分数。
     keys = []
     for key, value in pred_answers.items():
         keys.append(key)
@@ -126,4 +131,4 @@ with open(output_path_full, 'r') as f:
     full_predictions = json.load(f)
 with open(output_path_exp, 'r') as f:
     exp_predictions = json.load(f)
-filter_and_get_scores(resFileExp, save_scores_pathExp, full_predictions, exp_predictions)
+# unfilter_and_get_scores(resFileExp, save_scores_pathExp, full_predictions, exp_predicti

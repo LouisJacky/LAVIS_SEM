@@ -2,7 +2,7 @@
 ## Introduction
 SEM是一个针对自然语言解释任务的视觉语言模型，能够基于模型解决视觉问答任务时的推理过程生成忠实的自然语言解释，同时生成辅助解释的目标检测框。
 <br>
-    <img src="docs/_static/model.png" width="450"/><img src="docs/_static/example.png" width="400"/>
+    <img src="docs/_static/model.png" width="450"/><img src="docs/_static/example.png" width="150"/>
 <br>
 
 

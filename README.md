@@ -2,11 +2,9 @@
 ## Introduction
 SEM是一个针对自然语言解释任务的视觉语言模型，能够基于模型解决视觉问答任务时的推理过程生成忠实的自然语言解释，同时生成辅助解释的目标检测框。
 <br>
-    <img src="docs/_static/model.png" width="600"/>
+    <img src="docs/_static/model.png" width="400"/><img src="docs/_static/example.png" width="400"/>
 <br>
-<br>
-    <img src="docs/_static/example.png" width="600"/>
-<br>
+
 
 ## Install
 我们的工作基于开源深度学习库[LAVIS](https://github.com/salesforce/LAVIS)，和预训练多模态模型[BLIP-2](https://github.com/salesforce/LAVIS/tree/main/projects/blip2)，请按照以下步骤进行环境配置：

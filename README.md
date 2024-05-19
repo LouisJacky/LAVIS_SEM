@@ -1,9 +1,10 @@
 # SEM:Self-explanatory Method for Model Reasoning Process in Visual Question  Answering
 ## Introduction
-SEM是一个针对自然语言解释任务的视觉语言模型，能够基于模型解决视觉问答任务时的推理过程生成忠实的自然语言解释。
+SEM是一个针对自然语言解释任务的视觉语言模型，能够基于模型解决视觉问答任务时的推理过程生成忠实的自然语言解释，同时生成辅助解释的目标检测框。
 <br>
-    <img src="docs/_static/model.png" width="600"/>
+    <img src="docs/_static/model.png" width="600"/><img src="docs/_static/example.png" width="200"/>
 <br>
+
 
 ## Install
 我们的工作基于开源深度学习库[LAVIS](https://github.com/salesforce/LAVIS)，和预训练多模态模型[BLIP-2](https://github.com/salesforce/LAVIS/tree/main/projects/blip2)，请按照以下步骤进行环境配置：
@@ -230,7 +231,34 @@ python score.py
 ```
 
 ## Results
-你可以从[本链接](https://drive.google.com/drive/folders/1WjVJ5OVXaNNto-RRl61RT4Y-58nzVSmo?usp=drive_link)下载我们在性能比较实验中得到的测试集预测结果和评分结果
+你可以从[本链接](https://drive.google.com/drive/folders/1WjVJ5OVXaNNto-RRl61RT4Y-58nzVSmo?usp=drive_link)下载我们在性能比较实验中得到的测试集预测结果和评分结果，其中correct_question_ids_blip2_t5.json保存了原解码器预测正确的样本id，你可以通过以下步骤进行验证：
+1. 在LAVIS_SEM\lavis\projects\blip2\eval\sem_eval.yaml文件中设置测试参数：
+```yaml
+# 使用原BLIP2模型的解码器预测答案
+model:  
+  arch: blip2_t5_r
+  
+pretrained: "https://storage.googleapis.com/sfr-vision-language-research/LAVIS/models/BLIP2/blip2_pretrained.pth"  
+
+datasets:  
+  vqa_x_sem: 
+```
+2. 请使用以下命令进行测试：
+```bash
+python -m torch.distributed.run --nproc_per_node=1 evaluate_sem.py
+```
+测试结束后，将在LAVIS_SEM/lavis/output/SEM/eval/路径下将生成以project_id<a id="section3"></a>命名的文件夹，其中保存了原解码器的预测结果。
+
+3. 请使用LAVIS_SEM/SEM/Processer文件夹中的res_select.py程序挑选出原解码器预测正确的样本id。注意将其中的的[project_id](#section3)、path_to_LAVIS_SEM变量替换为你的实际路径，并自定义一个后缀名tail_name。
+```python
+tail_name = "blip2_t5"  
+project_id = "your_project_id"  
+path_to_LAVIS_SEM ="/path_to_your/LAVIS_SEM"
+```
+4. 使用以下命令运行res_select.py程序，将挑选出预测正确的样本id并保存在/SEM/Results文件夹下的correct_question_ids_{tail_name}.json文件中，该文件将与我们提供的correct_question_ids_blip2_t5.json完全一致。
+```bash
+python res_select.py
+```
 
 ## Contact us
 如果您有任何问题、意见或建议，请随时通过 lavis_sem@outlook.com 与我们联系。

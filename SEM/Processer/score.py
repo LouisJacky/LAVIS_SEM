@@ -57,7 +57,7 @@ def read_and_transform_json(input_path, output_path_full, output_path_exp):
     with open(output_path_exp, 'w') as f:
         json.dump(new_data_exp, f)
 
-    print("Accuracy: {}%".format(100 * correct_count / total_count))
+    #print("Accuracy: {}%".format(100 * correct_count / total_count))
 
 def filter_and_get_scores(resFileExp, save_scores_pathExp, full_predictions, exp_predictions):
     all_file = json.load(open(nle_data_test_path, 'r'))

@@ -11,4 +11,4 @@
               storage: /path_to_your/SEM/Datasets/annotation/a_okvqa_val.json
 
           images:
-            storage: /path_to_your/SEM/Datasets/images/AOK_VQA_test_images/
+            storage: /path_to_your/SEM/Datasets/images/VQA_X_val_images/

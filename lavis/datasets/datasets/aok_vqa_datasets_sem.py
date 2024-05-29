@@ -76,3 +76,63 @@ class AOKVQADataset(BaseDataset):
             "text_output_C_A": confident_answer_list
         }
 
+class AOKVQAEvalDataset(BaseDataset):
+    def __init__(self, vis_processor, text_processor, vis_root, ann_paths):
+        super().__init__(vis_processor, text_processor, vis_root, ann_paths)
+
+    def __getitem__(self, index):
+        ann = self.annotation[index]
+
+        image_path = os.path.join(self.vis_root, ann["image"])
+        image = Image.open(image_path).convert("RGB")
+
+        image = self.vis_processor(image)
+
+        img_id = ann["image"].split("/")[-1].strip(".jpg").split("_")[-1]
+
+        return {
+            "image_id": img_id,
+            "image": image,
+
+            "instance_id": ann["instance_id"],
+
+            "question_id": ann["question_id"],
+            "question": ann["question"],
+
+            # "multiple_choice_answer": ann["multiple_choice_answer"],
+            "explanation": ann["explanation"],
+            "answers": ann["answers"],
+        }
+
+    def collater(self, samples):
+        question_id_list = []
+        question_list = []
+        image_id_list = []
+        image_list = []
+
+        # answer_list = []
+        explanation_list = []
+        # e_weight_list = []
+        answers_list = []
+
+        for sample in samples:
+            question_id_list.append(sample["question_id"])
+            question_list.append(sample["question"])
+
+            image_id_list.append(sample["image_id"])
+            image_list.append(sample["image"])
+
+            explanation_list.append(sample["explanation"])
+            answers_list.append(sample["answers"])
+
+        return {
+            "question_id": question_id_list,
+            "text_input": question_list,
+
+            "image_id": image_id_list,
+            "image": torch.stack(image_list, dim=0),
+
+            "text_output_E": explanation_list,
+            "text_output_A": answers_list,
+        }
+

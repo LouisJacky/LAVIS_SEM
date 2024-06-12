@@ -10,12 +10,12 @@ path_to_LAVIS_SEM ="/path_to_your/LAVIS_SEM"
 
 # 设置文件路径
 input_path = f'{path_to_LAVIS_SEM}/lavis/output/SEM/eval/{project_id}/result/test_vqa_result_rank0.json'
-output_path_full = f'{path_to_LAVIS_SEM}/SEM/Results/vqaX_full_{tail_name}.json'
-output_path_exp = f'{path_to_LAVIS_SEM}/SEM/Results/vqaX_exp_{tail_name}.json'
-nle_data_test_path = f'{path_to_LAVIS_SEM}/SEM/Datasets/annotation/vqaX_test.json'
+output_path_full = f'{path_to_LAVIS_SEM}/SEM/Results/aokvqa_full_{tail_name}.json'
+output_path_exp = f'{path_to_LAVIS_SEM}/SEM/Results/aokvqa_exp_{tail_name}.json'
+nle_data_test_path = f'{path_to_LAVIS_SEM}/SEM/Datasets/annotation/aokvqa_nle.json'
 resFileExp = f'{path_to_LAVIS_SEM}/SEM/Results/resFileExp_{tail_name}.json'
 save_scores_pathExp = f'{path_to_LAVIS_SEM}/SEM/Results/save_scores_pathExp_{tail_name}.json'
-annFileExp = f'{path_to_LAVIS_SEM}/SEM/Datasets/annotation/vqaX_test_annot_exp.json'
+annFileExp = f'{path_to_LAVIS_SEM}/SEM/Datasets/annotation/aokvqa_ann_exp.json'
 
 # 读取并转换json文件
 def read_and_transform_json(input_path, output_path_full, output_path_exp):

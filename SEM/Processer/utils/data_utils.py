@@ -111,6 +111,19 @@ def proc_ans(ans):
     confident_answer = max(ans_prob_dict, key=ans_prob_dict.get)
     return confident_answer
 
+def proc_ans_2(ans):
+
+    ans_prob_dict = {}
+
+    for ans_proc in ans:
+        if ans_proc not in ans_prob_dict:
+            ans_prob_dict[ans_proc] = 1
+        else:
+            ans_prob_dict[ans_proc] += 1
+
+    confident_answer = max(ans_prob_dict, key=ans_prob_dict.get)
+    return confident_answer
+
 def proc_ques(ques):
     words = re.sub(r"([.,'!?\"()*#:;])",'',ques.lower()).replace('-', ' ').replace('/', ' ')
     return words
